@@ -203,7 +203,7 @@ void get_customer_data(struct customer *p_customers_start, int num_customers)
 }
 
 /**********************************************************************/
-/*             Remove non-letter characters and title-case            */
+/*      Remove non-letter characters and title-case the last names    */
 /**********************************************************************/
 void clean_names(struct customer *p_customers_start, int num_customers)
 {
@@ -229,7 +229,7 @@ void clean_names(struct customer *p_customers_start, int num_customers)
 }
 
 /**********************************************************************/
-/*          Sort into ascending order and print the customers         */
+/*   Sort the last names into ascending order and print the database  */
 /**********************************************************************/
 void print_customers(struct customer *p_customers_start, int num_customers)
 {   
@@ -257,8 +257,27 @@ void print_customers(struct customer *p_customers_start, int num_customers)
    for(p_customer = p_customers_start; (p_customer - p_customers_start) 
       < num_customers; p_customer++)
    {
-      printf(  "\n   %-20s  %-13.2f %d", p_customer->last_name, 
-      p_customer->amount, p_customer->priority);
+      printf(  "\n   %-20s  %-13.2f", p_customer->last_name, 
+         p_customer->amount);
+
+      /* Print the customer's priority level                             */
+      switch(p_customer->priority)
+      {
+         /* Priority level 1                                             */
+         case 1:
+         printf(" 1 (VIP)");
+         break;
+
+         /* Priority level 2                                             */
+         case 2:
+         printf(" 2 (Important)");
+         break;
+
+         /* Priority level 3                                             */
+         case 3:
+         printf(" 3 (Regular)");
+         break;
+      }
    }
 
    return;
