@@ -56,8 +56,8 @@
 struct customer
 {
    char  last_name[MAX_NAME_LENGTH]; /* */
-   int   priority;     /* */
-   float amount;       /* */
+   int   priority;                   /* */
+   float amount;                     /* */
 };
 
 /**********************************************************************/
@@ -81,10 +81,10 @@ void print_customers(struct customer *p_customers_start, int num_customers);
 /**********************************************************************/
 int main()
 {
-   int num_customers; /* Amount of customers                       */
-   struct customer *p_customer; /* Points to the database of accounts        */
-                         /* receivable customer records.              */
-
+   int num_customers;           /* Amount of customers                */
+   struct customer *p_customer; /* Points to the database of accounts */
+                                /* receivable customer records.       */
+ 
    /* Print the program heading                                       */
    printf("\n\n\n\n\n");
    print_heading();
@@ -105,9 +105,18 @@ int main()
       }
       /* Get customers, clean names, sort customers, print customers  */
       get_customer_data(p_customer, num_customers);
-      clean_names(p_customer, num_customers);
-      print_customers(p_customer, num_customers);
+      clean_names      (p_customer, num_customers);
+      print_customers  (p_customer, num_customers);
+      printf("\n\n******* End of Customer Database Processing *******");
+
+      /* Release the memory allocated to the customer database        */
+      free(p_customer);
    }
+
+   /* Say goodbye and terminate the program                           */
+   printf("\n\nThank you for processing customer databases. Have a");
+   printf(  "\ngood day!");
+   printf("\n\n\n\n\n");
 
    return 0;
 }
@@ -148,7 +157,7 @@ void print_instructions()
 /**********************************************************************/
 int get_num_customers()
 {
-   int num_customers; /* Amount of customers                       */
+   int num_customers; /* Amount of customers                          */
 
    printf("\n\nGet the customers for the database");
    printf(  "\n-----------------------------------------------");
@@ -165,28 +174,29 @@ void get_customer_data(struct customer *p_customers_start, int num_customers)
 {
    struct customer *p_customer; /* */
    
-   /* Loop processing every accounts receivable customer */
+   /* Loop processing every accounts receivable customer              */
    for (p_customer = p_customers_start; 
        (p_customer - p_customers_start) < num_customers;
        p_customer++)
    {
       /* Print the customer number */
-      printf("\n\nCustomer number %ld:", ((p_customer - p_customers_start) + 1));
+      printf("\n\nCustomer number %ld:", ((p_customer - p_customers_start) 
+         + 1));
 
-      /* Get the customer's last name */
+      /* Get the customer's last name                                 */
       printf(  "\n   Enter the customer's last name: ");
-      scanf ("%s", &p_customer->last_name);
+      scanf ("%s", p_customer->last_name);
       
-      /* Get the customer's amount owed */
+      /* Get the customer's amount owed                               */
       printf(    "   Enter the amount owed: ");
       scanf ("%f", &p_customer->amount);
 
-      /* Get the customer's priority level */
+      /* Get the customer's priority level                            */
       do 
       {
          printf( "   Enter the customer's priority (1-3): ");
          scanf ("%d", &p_customer->priority);
-      } while(p_customer->priority < 1 || p_customer->priority > 3);
+      }  while (p_customer->priority < 1 || p_customer->priority > 3);
    }
 
    return;
@@ -224,9 +234,10 @@ void clean_names(struct customer *p_customers_start, int num_customers)
 void print_customers(struct customer *p_customers_start, int num_customers)
 {   
    struct customer *p_customer;
-   
-   /* Bubble sort algorithm currently not working */
-      for(p_customer = p_customers_start; (p_customer - p_customers_start) < num_customers - 1; p_customer++)
+
+      /* Bubble sort algorithm currently not working                  */
+      for(p_customer = p_customers_start; (p_customer - p_customers_start) 
+         < num_customers - 1; p_customer++)
       {
          if(strcmp(p_customer->last_name, (p_customer->last_name) + 1) > 0)
          {
@@ -243,9 +254,11 @@ void print_customers(struct customer *p_customers_start, int num_customers)
    printf(  "\n   Customer Name         Amount        Priority");
    printf(  "\n-------------------     ---------    -------------");
 
-   for(p_customer = p_customers_start; (p_customer - p_customers_start) < num_customers; p_customer++)
+   for(p_customer = p_customers_start; (p_customer - p_customers_start) 
+      < num_customers; p_customer++)
    {
-      printf(  "\n   %-20s  %-13.2f %d", p_customer->last_name, p_customer->amount, p_customer->priority);
+      printf(  "\n   %-20s  %-13.2f %d", p_customer->last_name, 
+      p_customer->amount, p_customer->priority);
    }
 
    return;
