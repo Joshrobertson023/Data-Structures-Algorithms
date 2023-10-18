@@ -50,22 +50,6 @@
 #define QUIT            0           /* */
 
 /**********************************************************************/
-/*                        Function Prototypes                         */
-/**********************************************************************/
-void print_heading();
-   /* */
-void print_instructions();
-   /* */
-int get_num_customers();
-   /* */
-void get_customer_data();
-   /* */
-void clean_names();
-   /* */
-void print_customers();
-   /* */
-
-/**********************************************************************/
 /*                        Program structures                          */
 /**********************************************************************/
 /* A customer accounts receivable record                              */
@@ -75,6 +59,22 @@ struct customer
    int   priority;     /* */
    float amount;       /* */
 };
+
+/**********************************************************************/
+/*                        Function Prototypes                         */
+/**********************************************************************/
+void print_heading();
+   /* */
+void print_instructions();
+   /* */
+int get_num_customers();
+   /* */
+void get_customer_data(struct customer *p_customers_start, int num_customers);
+   /* */
+void clean_names(struct customer *p_customers_start, int num_customers);
+   /* */
+void print_customers(struct customer *p_customers_start, int num_customers);
+   /* */
 
 /**********************************************************************/
 /*                           Main Function                            */
@@ -224,7 +224,7 @@ void clean_names(struct customer *p_customers_start, int num_customers)
 void print_customers(struct customer *p_customers_start, int num_customers)
 {   
    struct customer *p_customer;
-   struct customer *i;
+   
    /* Bubble sort algorithm currently not working */
       for(p_customer = p_customers_start; (p_customer - p_customers_start) < num_customers - 1; p_customer++)
       {
