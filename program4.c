@@ -1,7 +1,6 @@
 /**********************************************************************/
 /*                                                                    */
-/* Program Name: program4 - Processing a database of experimental     */
-/*                          scientific data                           */
+/* Program Name: program4 - Running an accounts receivable database   */
 /* Author:       Josh Robertson                                       */
 /* Installation: Pensacola Christian College, Pensacola, Florida      */
 /* Course:       CS227, Data Structures and Algorithms                */
@@ -26,11 +25,11 @@
 
 /**********************************************************************/
 /*                                                                    */
-/* This program handles a customer accounts receivable database. It   */
-/* first asks for the number of customers. Then, for each customer,   */
-/* it asks for the last name, the amount owed, and the priority       */
-/* level. It then prints out the accounts receivable customer records */
-/* in list form.                                                      */
+/* This program processes accounts receivable customer records. It    */
+/* asks for the number of customers. Then for each customer it asks   */
+/* for the last name, the amount owed, and the priority level. It     */
+/* then prints the accounts receivable customer records in list form. */
+/* The last names are printed in ascending order.                     */
 /*                                                                    */
 /**********************************************************************/
 
@@ -46,12 +45,12 @@
 #define PROGRAMMER_NAME "Robertson" /* The programmer's last name     */
 #define PROGRAM_NUMBER  4           /* Teacher assigned program       */
                                     /* number                         */
-#define DB_ALLOC_ERROR  1           /* */
-#define END_OF_STRING   '\0'        /* */
-#define MAX_CUSTOMERS   100         /* */
-#define MIN_CUSTOMERS   2           /* */
-#define MAX_NAME_LENGTH 20          /* */
-#define QUIT            0           /* */
+#define DB_ALLOC_ERROR  1           /* Data memory allocation error   */
+#define END_OF_STRING   '\0'        /* End-of-string character        */
+#define MAX_CUSTOMERS   100         /* Max valid number of customers  */
+#define MIN_CUSTOMERS   2           /* Min valid number of customrs   */
+#define MAX_NAME_LENGTH 20          /* Max valid last name length     */
+#define QUIT            0           /* Program exit value             */
 
 /**********************************************************************/
 /*                        Program structures                          */
@@ -73,19 +72,22 @@ void print_instructions();
    /* Print the program instructions                                  */
 int get_num_customers();
    /* Get the number of customers                                     */
-void get_customer_data(struct customer *p_customers_start, int num_customers);
+void get_customer_data(struct customer *p_customers_start, 
+                       int num_customers);
    /* Get the accounts receivable customer database records           */
-void clean_names(struct customer *p_customers_start, int num_customers);
-   /* Remove non-letter characters and title-case the last names      */
-void print_customers(struct customer *p_customers_start, int num_customers);
-   /* Sort the last names into ascending order and print the database */
+void clean_names(struct customer *p_customers_start, 
+                 int num_customers);
+   /* Remove non-letter characters from and title-case the last names */
+void print_customer_data(struct customer *p_customers_start, 
+                         int num_customers);
+   /* Sort the last names into ascending order and print the records  */
 
 /**********************************************************************/
 /*                           Main Function                            */
 /**********************************************************************/
 int main()
 {
-   int num_customers;           /* Amount of customers                */
+   int num_customers;           /* Number of customers                */
    struct customer *p_customer; /* Points to the database of accounts */
                                 /* receivable customer records.       */
  
@@ -98,8 +100,8 @@ int main()
    while (print_instructions(), (num_customers = get_num_customers()) 
                                                                 != QUIT)
    {
-      /* Allocate memory the for customer records and abort if memory  */
-      /* is not available                                              */
+      /* Allocate memory for the database of customer records and      */
+      /* abort if memory is not available                              */
       if ((p_customer = malloc(sizeof(*p_customer) * num_customers)) 
                                                                  == NULL)
       {
@@ -112,9 +114,10 @@ int main()
 
       /* Get the customer data, clean the names, and print the        */
       /* database of accounts receivable customer records             */
-      get_customer_data(p_customer, num_customers);
-      clean_names      (p_customer, num_customers);
-      print_customers  (p_customer, num_customers);
+      get_customer_data  (p_customer, num_customers);
+      clean_names        (p_customer, num_customers);
+      print_customer_data(p_customer, num_customers);
+
       printf("\n\n******* End of Customer Database Processing *******");
 
       /* Release the memory allocated to the customer database        */
@@ -122,8 +125,8 @@ int main()
    }
 
    /* Say goodbye and terminate the program                           */
-   printf("\n\nThank you for processing customer databases. Have a");
-   printf(  "\ngood day!");
+   printf("\n\nThank you for processing accounts receivable customer");
+   printf(  "\nrecords. Have a good day!");
    printf("\n\n\n\n\n");
 
    return 0;
@@ -169,16 +172,24 @@ int get_num_customers()
 
    printf("\n\nGet the customers for the database");
    printf(  "\n-----------------------------------------------");
-   printf(  "\nHow many customers do you have (%d to %d, %d=QUIT): ", 
-      MIN_CUSTOMERS, MAX_CUSTOMERS, QUIT);
-   scanf ("%d", &num_customers);
+
+   do 
+   {
+      printf(  "\nHow many customers do you have (%d to %d, %d=QUIT): ", 
+         MIN_CUSTOMERS, MAX_CUSTOMERS, QUIT);
+      scanf ("%d", &num_customers);
+   }  while ((num_customers < MIN_CUSTOMERS || 
+              num_customers > MAX_CUSTOMERS) && 
+              num_customers != QUIT);
+
    return num_customers;
 }
 
 /**********************************************************************/
 /*      Get the accounts receivable customer database records         */
 /**********************************************************************/
-void get_customer_data(struct customer *p_customers_start, int num_customers)
+void get_customer_data(struct customer *p_customers_start, 
+                       int num_customers)
 {
    struct customer *p_customer; /* Points to every customer           */
    
@@ -213,12 +224,15 @@ void get_customer_data(struct customer *p_customers_start, int num_customers)
 /**********************************************************************/
 /*     Remove non-letter characters and title-case the last names     */
 /**********************************************************************/
-void clean_names(struct customer *p_customers_start, int num_customers)
+void clean_names(struct customer *p_customers_start, 
+                 int num_customers)
 {
    struct customer *p_customer; /* Points to every customer           */
 
-   for(p_customer = p_customers_start; (p_customer - p_customers_start) 
-      < num_customers; p_customer++)
+   /* Loop processing every accounts receivable customer              */
+   for(p_customer = p_customers_start; 
+      (p_customer - p_customers_start) < num_customers; 
+      p_customer++)
    {
       char *p_fast = p_customer->last_name, /* Points to every char   */
                                             /* in the last name       */
@@ -241,25 +255,25 @@ void clean_names(struct customer *p_customers_start, int num_customers)
 /**********************************************************************/
 /*   Sort the last names into ascending order and print the database  */
 /**********************************************************************/
-void print_customers(struct customer *p_customers_start, int num_customers)
+void print_customer_data(struct customer *p_customers_start, 
+                         int num_customers)
 {   
-   struct customer *p_customer,        /* Points to every customer    */
-                   *p_second_customer, /* Points to the next customer */
-                                       /* in the database             */
-                   temp_customer;      /* Temporary customer          */
-   int counter;                        /* Temporary counter           */
+   struct customer *p_customer,   /* Points to every customer         */
+                                  /* in the database                  */
+                   temp_customer; /* Temporary customer               */
+   int counter;                   /* Temporary counter                */
 
    for(counter = 1; counter < num_customers; counter++)
    {
-      for(p_customer = p_customers_start, p_second_customer = p_customer + 1; 
+      for(p_customer = p_customers_start; 
          (p_customer - p_customers_start) < (num_customers - counter); 
-         p_customer++, p_second_customer++)
+         p_customer++)
       {
-         if(strcmp(p_customer->last_name, p_second_customer->last_name) > 0)
+         if(strcmp(p_customer->last_name, (p_customer+1)->last_name) > 0)
          {
             temp_customer = *p_customer;
-            *p_customer = *p_second_customer;
-            *p_second_customer = temp_customer;
+            *p_customer = *(p_customer + 1);
+            *(p_customer + 1) = temp_customer;
          }
       }
    }
@@ -270,12 +284,12 @@ void print_customers(struct customer *p_customers_start, int num_customers)
    printf(  "\n-------------------     ---------    -------------");
 
    /* Loop processing every accounts receivable customer              */
-   
-   for(p_customer = p_customers_start; (p_customer - p_customers_start) 
-      < num_customers; p_customer++)
+   for(p_customer = p_customers_start; 
+      (p_customer - p_customers_start) < num_customers; 
+      p_customer++)
    {
-      printf(  "\n   %-20s  %-13.2f", p_customer->last_name, 
-         p_customer->amount);
+      printf(  "\n   %-20s  %-13.2f", 
+         p_customer->last_name, p_customer->amount);
 
       /* Print the customer's priority level                          */
       switch(p_customer->priority)
