@@ -53,7 +53,7 @@ char get_response();
    /* */
 void get_range(int *p_first_number, int *p_last_number);
    /* */
-
+void swap(int *p_first_number, int *p_second_number);
 
 /**********************************************************************/
 /*                           Main Function                            */
@@ -72,8 +72,14 @@ int main()
    /* Loop processing until the user quits */
    while ((user_response = get_response()) == 'y')
    {
-      /* */
+      /* Get the range */
       get_range(&first_number, &last_number);
+
+      /* Print the sum of the even whole numbers in the range, inclusively */
+      printf("\nProcessing the range %d to %d:", first_number, last_number);
+      if(first_number > last_number)
+         swap(&first_number, &last_number);
+      printf("\n\n%d, %d", first_number, last_number);
    }
 
    return 0;
@@ -110,9 +116,9 @@ char get_response()
 
    do
    {
-      printf("\nDo you want to process another number? (Y = yes, N = no)");
+      printf("\nDo you want to process another number? (Y = yes, N = no) ");
       scanf(" %1s", user_response);
-      /*response = tolower(response);*/
+      user_response[0] = tolower(user_response[0]);
    }
    while(user_response[0] != 'y' && user_response[0] != 'n');
    
@@ -130,7 +136,7 @@ void get_range(int *p_first_number, int *p_last_number)
          MINIMUM_VALUE, MAXIMUM_VALUE);
       scanf ("%d", p_first_number);
    }
-   while (p_first_number < MINIMUM_VALUE || p_first_number > MAXIMUM_VALUE);
+   while (*p_first_number < MINIMUM_VALUE || *p_first_number > MAXIMUM_VALUE);
 
    do 
    {
@@ -138,7 +144,18 @@ void get_range(int *p_first_number, int *p_last_number)
          MINIMUM_VALUE, MAXIMUM_VALUE);
       scanf ("%d", p_last_number);
    }
-   while (p_last_number < MINIMUM_VALUE || p_last_number > MAXIMUM_VALUE);
+   while (*p_first_number < MINIMUM_VALUE || *p_last_number > MAXIMUM_VALUE);
 
+   return;
+}
+
+/**********************************************************************/
+/*                         Swap two numbers                           */
+/**********************************************************************/
+void swap(int *first_number, int *second_number)
+{
+   *first_number += *second_number;
+   *second_number = *first_number - *second_number;
+   *first_number -= *second_number;
    return;
 }
