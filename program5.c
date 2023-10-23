@@ -181,17 +181,27 @@ void swap(int *first_number, int *second_number)
 /**********************************************************************/
 int sum_evens(int first_number, int last_number) 
 {
-   int result; /* */
-
-   printf("\nEntering sum function for range %d to %d", 
+   printf("\n   Entering sum function for range %d to %d", 
       first_number, last_number);
-   
-   // Recursive code to sum evens in the range
 
-   printf("\nExiting sum function for range %d to %d with result: %d",
-      first_number, last_number, /* result */ );
+   if(first_number < last_number)
+   {
+      if(is_even(first_number))
+      {
+         printf("\n      Adding: %d", first_number);
+         return (first_number + sum_evens(first_number + 1, last_number));
+      }
+      else
+      {
+         printf("\n      Skipping: %d", first_number);
+         return sum_evens(first_number + 1, last_number);
+      }
+   }
 
-   return result;
+   printf("\n   Exiting sum function for range %d to %d with result: ",
+      first_number, last_number /* result */ );
+
+   return 0;
 }
 
 /**********************************************************************/
