@@ -54,15 +54,20 @@ char get_response();
 void get_range(int *p_first_number, int *p_last_number);
    /* */
 void swap(int *p_first_number, int *p_second_number);
+   /* */
+int sum_evens(int first_number, int last_number);
+   /* */
+int is_even(int number);
+   /* */
 
 /**********************************************************************/
 /*                           Main Function                            */
 /**********************************************************************/
 int main() 
 {
-   int first_number = 0, /* */
-       last_number = 0;   /* */
-   char user_response;  /* */
+   int  first_number,  /* */
+        last_number;   /* */
+   char user_response; /* */
 
    /* Print the program heading and instructions */
    print_heading();
@@ -76,12 +81,15 @@ int main()
       get_range(&first_number, &last_number);
 
       /* Print the sum of the even whole numbers in the range, inclusively */
-      printf("\nProcessing the range %d to %d:", first_number, last_number);
       if(first_number > last_number)
          swap(&first_number, &last_number);
-      printf("\n\n%d, %d", first_number, last_number);
+      printf("\nProcessing the range %d to %d:", first_number, last_number);
+      printf("\nThe sum of all even numbers in the range %d to %d is: %d",
+         first_number, last_number, sum_evens(first_number, last_number));
    }
 
+   /* Print goodbye and terminate the program */
+   printf("\nThanks for \"even summing\". Have a good day!");
    return 0;
 }
 
@@ -104,6 +112,14 @@ void print_heading()
 /**********************************************************************/
 void print_instructions() 
 {
+   printf("\nThis program recursively calculates the sum of all");
+   printf("\neven whole numbers between two numbers inclusively.");
+   printf("\nYou are repeatedly asked to enter in the start and");
+   printf("\nend of a range, and the sum of all even numbers in");
+   printf("\nthat range is calculated and printed. Information");
+   printf("\nabout the resursive action of the function is also");
+   printf("\nprinted so the recursive nature of the calculation");
+   printf("\n                 may be observed.");
    return;
 }
 
@@ -158,4 +174,30 @@ void swap(int *first_number, int *second_number)
    *second_number = *first_number - *second_number;
    *first_number -= *second_number;
    return;
+}
+
+/**********************************************************************/
+/*                                         */
+/**********************************************************************/
+int sum_evens(int first_number, int last_number) 
+{
+   int result; /* */
+
+   printf("\nEntering sum function for range %d to %d", 
+      first_number, last_number);
+   
+   // Recursive code to sum evens in the range
+
+   printf("\nExiting sum function for range %d to %d with result: %d",
+      first_number, last_number, /* result */ );
+
+   return result;
+}
+
+/**********************************************************************/
+/*                 Check to see if a number is even                   */
+/**********************************************************************/
+int is_even(int number) 
+{
+   return (number % 2 == 0) ? 1 : 0;
 }
