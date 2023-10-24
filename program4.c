@@ -1,6 +1,6 @@
 /**********************************************************************/
 /*                                                                    */
-/* Program Name: program4 - Running an accounts receivable database   */
+/* Program Name: program4 - Managing an accounts receivable database  */
 /* Author:       Josh Robertson                                       */
 /* Installation: Pensacola Christian College, Pensacola, Florida      */
 /* Course:       CS227, Data Structures and Algorithms                */
@@ -26,10 +26,10 @@
 /**********************************************************************/
 /*                                                                    */
 /* This program processes accounts receivable customer records. It    */
-/* asks for the number of customers. Then for each customer it asks   */
-/* for the last name, the amount owed, and the priority level. It     */
-/* then prints the accounts receivable customer records in list form. */
-/* The last names are printed in ascending order.                     */
+/* asks for the number of customers. Then it asks for the last name,  */
+/* the amount owed, and the priority level. It title-cases the last   */
+/* names and sorts the customers into ascending order, then prints    */
+/* the accounts receivable customer records.                          */
 /*                                                                    */
 /**********************************************************************/
 
@@ -43,13 +43,14 @@
 /**********************************************************************/
 #define COURSE_NUMBER   "CS227"     /* PCC assigned course number     */
 #define PROGRAMMER_NAME "Robertson" /* The programmer's last name     */
-#define PROGRAM_NUMBER  4           /* Teacher assigned program       */
-                                    /* number                         */
-#define DB_ALLOC_ERROR  1           /* Data memory allocation error   */
+#define PROGRAM_NUMBER  4           /* Teacher assigned program num   */
+#define DB_ALLOC_ERROR  1           /* Error allocating memory        */
 #define END_OF_STRING   '\0'        /* End-of-string character        */
-#define MAX_CUSTOMERS   100         /* Max valid number of customers  */
-#define MIN_CUSTOMERS   2           /* Min valid number of customrs   */
-#define MAX_NAME_LENGTH 20          /* Max valid last name length     */
+#define MAX_CUSTOMERS   100         /* Maximum valid number of        */
+                                    /* customers                      */
+#define MIN_CUSTOMERS   2           /* Minimum valid number of        */
+                                    /* customers                      */
+#define MAX_NAME_LENGTH 20          /* Maximum valid last name length */
 #define QUIT            0           /* Program exit value             */
 
 /**********************************************************************/
@@ -58,9 +59,9 @@
 /* A customer accounts receivable record                              */
 struct customer
 {
-   char  last_name[MAX_NAME_LENGTH]; /* Last name                     */
-   int   priority;                   /* Priority level                */
-   float amount;                     /* Amount owed                   */
+   char  last_name[MAX_NAME_LENGTH + 1]; /* Last name                 */
+   int   priority;                       /* Priority level            */
+   float amount;                         /* Amount owed               */
 };
 
 /**********************************************************************/
