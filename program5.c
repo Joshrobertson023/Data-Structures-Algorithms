@@ -55,7 +55,7 @@ void get_range(int *p_first_number, int *p_last_number);
    /* */
 void swap(int *p_first_number, int *p_second_number);
    /* */
-int sum_evens(int first_number, int last_number);
+int sum_evens(int first_number, int last_number, int sum);
    /* */
 int is_even(int number);
    /* */
@@ -68,6 +68,7 @@ int main()
    int  first_number,  /* */
         last_number;   /* */
    char user_response; /* */
+   int sum = 0; /* For debugging */
 
    /* Print the program heading and instructions */
    print_heading();
@@ -85,11 +86,12 @@ int main()
          swap(&first_number, &last_number);
       printf("\nProcessing the range %d to %d:", first_number, last_number);
       printf("\nThe sum of all even numbers in the range %d to %d is: %d",
-         first_number, last_number, sum_evens(first_number, last_number));
+         first_number, last_number, sum_evens(first_number, last_number, sum));
    }
 
    /* Print goodbye and terminate the program */
    printf("\nThanks for \"even summing\". Have a good day!");
+   printf("\n\n\n\n\n");
    return 0;
 }
 
@@ -178,30 +180,41 @@ void swap(int *first_number, int *second_number)
 
 /**********************************************************************/
 /*                                         */
-/**********************************************************************/
-int sum_evens(int first_number, int last_number) 
+/**********************************************************************/  /*Function only has one return statement */
+int sum_evens(int first_number, int last_number, int sum) 
 {
    printf("\n   Entering sum function for range %d to %d", 
       first_number, last_number);
 
-   if(first_number < last_number)
+   /* Recursive code to sum evens in a range*/
+
+   if(first_number <= last_number)
    {
       if(is_even(first_number))
       {
          printf("\n      Adding: %d", first_number);
-         return (first_number + sum_evens(first_number + 1, last_number));
+         sum += first_number;
+         sum_evens(first_number + 1, last_number, sum);
       }
-      else
+      else 
       {
          printf("\n      Skipping: %d", first_number);
-         return sum_evens(first_number + 1, last_number);
+         sum_evens(first_number + 1, last_number, sum);
       }
    }
+   /* If current range < range end, enter sum function
+       If even, print adding...
+          Add current range to sum
+       If not even, print skipping...
+    Else if current range > range end, exit sum function */
 
-   printf("\n   Exiting sum function for range %d to %d with result: ",
-      first_number, last_number /* result */ );
+    /* WORKS BUT GOES BACKWARDS WHEN EXITING SUM FUNCTION */
 
-   return 0;
+
+   printf("\n   Exiting sum function for range %d to %d with result: %d",
+      first_number, last_number, sum);
+
+   return sum; /* Only return statement in function */
 }
 
 /**********************************************************************/
