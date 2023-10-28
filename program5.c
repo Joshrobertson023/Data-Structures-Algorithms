@@ -100,7 +100,7 @@ int main()
 /**********************************************************************/
 void print_heading()
 {
-   printf("\n\n\n\n\n\n");
+   printf("\n\n\n\n\n");
    printf("\n========================================================");
    printf("\n              Program Number: %d",    PROGRAM_NUMBER);
    printf("\n              Programmer: %s",        PROGRAMMER_NAME);
@@ -134,7 +134,7 @@ char get_response()
 
    do
    {
-      printf("\nDo you want to process another number? (Y = yes, N = no) ");
+      printf("\n\nDo you want to process another number? (Y = yes, N = no) ");
       scanf(" %1s", user_response);
       user_response[0] = tolower(user_response[0]);
    }
@@ -179,42 +179,31 @@ void swap(int *first_number, int *second_number)
 }
 
 /**********************************************************************/
-/*                                         */
-/**********************************************************************/  /*Function only has one return statement */
+/*         Recursively sum the evens in a range of two numbers        */
+/**********************************************************************/
 int sum_evens(int first_number, int last_number, int sum) 
 {
    printf("\n   Entering sum function for range %d to %d", 
       first_number, last_number);
-
-   /* Recursive code to sum evens in a range*/
 
    if(first_number <= last_number)
    {
       if(is_even(first_number))
       {
          printf("\n      Adding: %d", first_number);
-         sum += first_number;
-         sum_evens(first_number + 1, last_number, sum);
+         sum = first_number + sum_evens(first_number + 1, last_number, sum);
       }
       else 
       {
          printf("\n      Skipping: %d", first_number);
-         sum_evens(first_number + 1, last_number, sum);
+         sum = sum_evens(first_number + 1, last_number, sum);
       }
    }
-   /* If current range < range end, enter sum function
-       If even, print adding...
-          Add current range to sum
-       If not even, print skipping...
-    Else if current range > range end, exit sum function */
-
-    /* WORKS BUT GOES BACKWARDS WHEN EXITING SUM FUNCTION */
-
 
    printf("\n   Exiting sum function for range %d to %d with result: %d",
       first_number, last_number, sum);
 
-   return sum; /* Only return statement in function */
+   return sum;
 }
 
 /**********************************************************************/
