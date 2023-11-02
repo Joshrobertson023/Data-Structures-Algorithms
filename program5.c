@@ -31,7 +31,7 @@
 /* swaps the two numbers if they are not in ascending order. It then  */
 /* prints out the sum of all the even numbers in the range            */
 /* inclusively, then asks the user if they would like to process      */
-/* another range again.                                               */
+/* another range.                                                     */
 /*                                                                    */
 /**********************************************************************/
 
@@ -78,9 +78,9 @@ int main()
    print_instructions();
 
    /* Loop processing until the user quits                            */
-   while (get_response() == 'y')
+   while(get_response() == 'y')
    {
-      /* Get the range                                                */
+      /* Get the start and end of the range                           */
       get_range(&range_start, &range_end);
 
       /* Print the sum of the even whole numbers in the range,        */
