@@ -52,6 +52,11 @@ void print_instructions();
 void get_data(int array[], int last_index); /* Rename array to something meaningful */
    /* Get the data for the array */
 void show_data(int array[], int last_index, int search_target);
+   /* */
+void search_result(char result, int target_location);
+   /* */
+int sequential_search(int array[], int last_index, int search_target, int *p_target_location);
+   /* */
 
 /**********************************************************************/
 /*                           Main Function                            */
@@ -61,7 +66,8 @@ int main()
    int seq_data[DATA_SIZE], /* */
        prb_data[DATA_SIZE], /* */
        bin_data[DATA_SIZE], /* */
-       search_target;       /* */
+       search_target,       /* */
+       target_location;     /* */
 
    /* Print the program heading and instructions                      */
    printf("\n\n\n\n\n\n\n");
@@ -86,6 +92,10 @@ int main()
       /* Ordered Sequential Search */
       printf("\n\n\nOrdered Sequential Search:");
       show_data(seq_data, LAST_INDEX, search_target);
+      if(sequential_search(seq_data, LAST_INDEX, search_target, &target_location))
+         search_result('S', target_location);
+      else 
+         search_result('U', target_location);
    }
 
    return 0;
@@ -158,17 +168,48 @@ void show_data(int array[], int last_index, int search_target)
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-/*void search_result()*/
-   /* Prints successful or unsuccessful or undetermined */
-   /* Use nested if else, not multiple else ifs */
+void search_result(char result, int target_location)          /* TO-DO: Remove curly braces from loops */
+{
+   printf("\nSearch outcome: ");
+
+   if(result == 'S')
+   {
+      printf("Successful - target found at index [%2d]", target_location);
+   }
+   else
+   {
+      if(result == 'U')
+         printf("Unsuccessful - target not found");
+      else
+         printf("Undetermined");
+   }
+
+   return;
+}
 
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-/*void sequential_search()*/
-   /* No found variable, return (expression evaluating true or false) */
-   /* Print statements that add index every time index value is looked at (search path) */
-      /* Should be able to remove without breaking code */
+int sequential_search(int array[], int last_index, int search_target, int *p_target_location)
+{
+   int search_index = 0; /* */
+
+   printf("\n   Search Path: ");
+
+   if(search_target < array[last_index])
+   {
+      while(search_index < last_index && search_target != array[search_index])
+      {
+         printf("[%2d]", search_index);
+         search_index++;
+      }
+      *p_target_location = search_index;
+   }
+   else
+      *p_target_location = last_index;
+
+   return(search_target == array[*p_target_location]);
+}
 
 /**********************************************************************/
 /*                                     */
