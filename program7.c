@@ -168,21 +168,17 @@ void show_data(int array[], int last_index, int search_target)
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-void search_result(char result, int target_location)          /* TO-DO: Remove curly braces from loops */
+void search_result(char result, int target_location)
 {
    printf("\nSearch outcome: ");
 
    if(result == 'S')
-   {
       printf("Successful - target found at index [%2d]", target_location);
-   }
    else
-   {
       if(result == 'U')
          printf("Unsuccessful - target not found");
       else
          printf("Undetermined");
-   }
 
    return;
 }
@@ -198,7 +194,8 @@ int sequential_search(int array[], int last_index, int search_target, int *p_tar
 
    if(search_target < array[last_index])
    {
-      while(search_index < last_index && search_target != array[search_index])
+      /* Find first element greater than or equal to target */
+      while(search_index <= last_index && search_target > array[search_index])
       {
          printf("[%2d]", search_index);
          search_index++;
