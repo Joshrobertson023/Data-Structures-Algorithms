@@ -48,7 +48,16 @@ void print_instructions();
    /* Print the program instructions                                  */
 void get_data(int array[], int last_index); /* Rename array to something meaningful */
    /* Get the data for the array */
-
+void show_data(int array[], int last_index, int search_target);
+   /* */
+void search_result();
+   /* */
+void sequential_search();
+   /* */
+void probability_search();
+   /* */
+void binary_search();
+   /* */
 
 /**********************************************************************/
 /*                           Main Function                            */
@@ -57,17 +66,32 @@ int main()
 {
    int seq_data[DATA_SIZE], /* */
        prb_data[DATA_SIZE], /* */
-       bin_data[DATA_SIZE]; /* */
+       bin_data[DATA_SIZE], /* */
+       search_target;       /* */
 
    /* Print the program heading and instructions                      */
-   printf("\n\n\n\n\n\n\n")
+   printf("\n\n\n\n\n\n\n");
    print_heading();
    print_instructions();
 
    /* Get the data for each search algorithm */
-   get_data(seq_data[], LAST_INDEX);
-   get_data(prb_data[], LAST_INDEX);
-   get_data(bin_data[], LAST_INDEX);
+   get_data(seq_data, LAST_INDEX);
+   get_data(prb_data, LAST_INDEX);
+   get_data(bin_data, LAST_INDEX);
+
+   /* For debugging */
+   /*int index;
+   for(index = 0; index <= LAST_INDEX; index++) {
+      printf("\n%d\n", seq_data[index]);
+   }*/
+
+   /* Loop processing ... until user quits */
+   while(printf("\n\n\nEnter an integer search target (0 to quit): "), 
+      scanf("%d", &search_target), (search_target != QUIT))
+   {
+      /* Ordered Sequential Search */
+      show_data(seq_data, LAST_INDEX, search_target);
+   }
 
    return 0;
 }
@@ -100,6 +124,7 @@ void print_instructions()
    printf("\n     3. Binary Search");
    printf("\nThe progress of each search is shown so the efficiency");
    printf("\nof the search algorithms can be compared.");
+   return;
 }
 
 /**********************************************************************/
@@ -107,5 +132,60 @@ void print_instructions()
 /**********************************************************************/
 void get_data(int array[], int last_index)
 {
+   int array_index;
+
+   for(array_index = 0; array_index < last_index; array_index++)
+      array[array_index] = (array_index * 5) + 10;
+
+   return;
+}
+
+/**********************************************************************/
+/*                                     */
+/**********************************************************************/
+void show_data(int array[], int last_index, int search_target)
+{
+   /* Prints three lines after search name */
+   /* Prints index, data, and target */
    
+}
+
+/**********************************************************************/
+/*                                     */
+/**********************************************************************/
+void search_result()
+{
+   /* Prints successful or unsuccessful or undetermined */
+   /* Use nested if else, not multiple else ifs */
+}
+
+/**********************************************************************/
+/*                                     */
+/**********************************************************************/
+void sequential_search()
+{
+   /* No found variable, return (expression evaluating true or false) */
+   /* Print statements that add index every time index value is looked at (search path) */
+      /* Should be able to remove without breaking code */
+}
+
+/**********************************************************************/
+/*                                     */
+/**********************************************************************/
+void probability_search()
+{
+   /* No found variable, return (expression evaluating true or false) */
+   /* Print statements that add index every time index value is looked at (search path) */
+      /* Should be able to remove without breaking code */
+   /* Has swap code */
+}
+
+/**********************************************************************/
+/*                                     */
+/**********************************************************************/
+void binary_search()
+{
+   /* No found variable, return (expression evaluating true or false) */
+   /* Print statements that add index every time index value is looked at (search path) */
+      /* Should be able to remove without breaking code */
 }
