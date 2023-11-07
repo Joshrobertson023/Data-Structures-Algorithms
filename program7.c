@@ -23,6 +23,9 @@
 /*                                                                    */
 /**********************************************************************/
 
+/* TO-DO */
+/* Rename array[] to something meaningful throught program */
+
 /**********************************************************************/
 /*                                                                    */
 /**********************************************************************/
@@ -49,15 +52,6 @@ void print_instructions();
 void get_data(int array[], int last_index); /* Rename array to something meaningful */
    /* Get the data for the array */
 void show_data(int array[], int last_index, int search_target);
-   /* */
-void search_result();
-   /* */
-void sequential_search();
-   /* */
-void probability_search();
-   /* */
-void binary_search();
-   /* */
 
 /**********************************************************************/
 /*                           Main Function                            */
@@ -90,6 +84,7 @@ int main()
       scanf("%d", &search_target), (search_target != QUIT))
    {
       /* Ordered Sequential Search */
+      printf("\n\n\nOrdered Sequential Search:");
       show_data(seq_data, LAST_INDEX, search_target);
    }
 
@@ -132,9 +127,9 @@ void print_instructions()
 /**********************************************************************/
 void get_data(int array[], int last_index)
 {
-   int array_index;
+   int array_index; /* */
 
-   for(array_index = 0; array_index < last_index; array_index++)
+   for(array_index = 0; array_index <= last_index; array_index++)
       array[array_index] = (array_index * 5) + 10;
 
    return;
@@ -145,47 +140,47 @@ void get_data(int array[], int last_index)
 /**********************************************************************/
 void show_data(int array[], int last_index, int search_target)
 {
-   /* Prints three lines after search name */
-   /* Prints index, data, and target */
-   
+   int array_index; /* */
+
+   printf("\n   Array Index: ");
+   for(array_index = 0; array_index <= last_index; array_index++)
+      printf("[%2d]", array_index);
+
+   printf("\n    Array Data: ");
+   for(array_index = 0; array_index <= last_index; array_index++)
+      printf(" %2d ", array[array_index]);
+
+   printf("\n   User Target:  %d", search_target);
+
+   return;
 }
 
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-void search_result()
-{
+/*void search_result()*/
    /* Prints successful or unsuccessful or undetermined */
    /* Use nested if else, not multiple else ifs */
-}
 
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-void sequential_search()
-{
+/*void sequential_search()*/
    /* No found variable, return (expression evaluating true or false) */
    /* Print statements that add index every time index value is looked at (search path) */
       /* Should be able to remove without breaking code */
-}
 
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-void probability_search()
-{
    /* No found variable, return (expression evaluating true or false) */
    /* Print statements that add index every time index value is looked at (search path) */
       /* Should be able to remove without breaking code */
    /* Has swap code */
-}
 
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-void binary_search()
-{
    /* No found variable, return (expression evaluating true or false) */
    /* Print statements that add index every time index value is looked at (search path) */
       /* Should be able to remove without breaking code */
-}
