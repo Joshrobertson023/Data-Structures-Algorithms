@@ -57,6 +57,8 @@ void search_result(char result, int target_location);
    /* */
 int sequential_search(int array[], int last_index, int search_target, int *p_target_location);
    /* */
+int probability_search(int array[], int last_index, int search_target, int *p_target_location);
+   /* */
 
 /**********************************************************************/
 /*                           Main Function                            */
@@ -90,9 +92,17 @@ int main()
       scanf("%d", &search_target), (search_target != QUIT))
    {
       /* Ordered Sequential Search */
-      printf("\n\n\nOrdered Sequential Search:");
+      printf("\n\nOrdered Sequential Search:");
       show_data(seq_data, LAST_INDEX, search_target);
       if(sequential_search(seq_data, LAST_INDEX, search_target, &target_location))
+         search_result('S', target_location);
+      else 
+         search_result('U', target_location);
+
+      /* Probability search */
+      printf("\n\nProbability Search:");
+      show_data(prb_data, LAST_INDEX, search_target);
+      if(probability_search(prb_data, LAST_INDEX, search_target, &target_location))
          search_result('S', target_location);
       else 
          search_result('U', target_location);
@@ -194,16 +204,19 @@ int sequential_search(int array[], int last_index, int search_target, int *p_tar
 
    if(search_target < array[last_index])
    {
-      /* Find first element greater than or equal to target */
       while(search_index <= last_index && search_target > array[search_index])
       {
          printf("[%2d]", search_index);
          search_index++;
       }
+      printf("[%2d]", search_index);
       *p_target_location = search_index;
    }
    else
+   {
+      printf("[%2d]", last_index);
       *p_target_location = last_index;
+   }
 
    return(search_target == array[*p_target_location]);
 }
@@ -215,6 +228,31 @@ int sequential_search(int array[], int last_index, int search_target, int *p_tar
    /* Print statements that add index every time index value is looked at (search path) */
       /* Should be able to remove without breaking code */
    /* Has swap code */
+int probability_search(int array[], int last_index, int search_target, int *p_target_location)
+{
+   int search_index = 0, /* */
+       temporary;        /* */ /* Rename! */
+
+   printf("\n   Search Path: ");
+
+   while(search_index < last_index && search_target != array[search_index])
+   {
+      printf("[%2d]", search_index);
+      search_index++;
+   }
+   printf("[%2d]", search_index);
+   *p_target_location = search_index;
+
+   if(search_index > 0)
+   {
+      temporary = array[search_index];
+      array[search_index] = array[search_index - 1];
+      array[search_index - 1] = temporary;
+      *p_target_location -= 1;
+   }
+
+   return(search_target == array[*p_target_location]);
+}
 
 /**********************************************************************/
 /*                                     */
