@@ -22,3 +22,19 @@ selection sort.
 This program introduced us to structs. This program was challenging
 for many of us students. It involved adding data, re-arranging data,
 changing the data, and finally printing it.
+
+**Program 5**
+This program introduced us to recursion. We had to sum all even numbers
+in a range of two whole numbers using a recursive function and prints
+the numbers it is adding or skipping to demonstrate the recursive
+solution.
+
+**Program 7**
+We are doing this program out of order. In this program I created
+three different searching algorithms to search arrays of integers.
+The three algorithms were:
+   Ordered Sequential Search
+   Probability Search
+   Binary Search
+Once again there was a lot of printing to the terminal to demonstrate
+the search paths and techniques of the algorithms.s
