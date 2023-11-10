@@ -80,13 +80,7 @@ int main()
    get_data(seq_data, LAST_INDEX);
    get_data(prb_data, LAST_INDEX);
    get_data(bin_data, LAST_INDEX);
-
-   /* For debugging */
-   /*int index;
-   for(index = 0; index <= LAST_INDEX; index++) {
-      printf("\n%d\n", seq_data[index]);
-   }*/
-
+   
    /* Loop processing ... until user quits */
    while(printf("\n\n\nEnter an integer search target (0 to quit): "), 
       scanf("%d", &search_target), (search_target != QUIT))
@@ -224,10 +218,6 @@ int sequential_search(int array[], int last_index, int search_target, int *p_tar
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-   /* No found variable, return (expression evaluating true or false) */
-   /* Print statements that add index every time index value is looked at (search path) */
-      /* Should be able to remove without breaking code */
-   /* Has swap code */
 int probability_search(int array[], int last_index, int search_target, int *p_target_location)
 {
    int search_index = 0, /* */
