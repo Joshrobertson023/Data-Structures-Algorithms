@@ -59,6 +59,8 @@ int sequential_search(int array[], int last_index, int search_target, int *p_tar
    /* */
 int probability_search(int array[], int last_index, int search_target, int *p_target_location);
    /* */
+int binary_search(int array[], int last_index, int search_target, int *p_target_location);
+   /* */
 
 /**********************************************************************/
 /*                           Main Function                            */
@@ -100,8 +102,18 @@ int main()
          search_result('S', target_location);
       else 
          search_result('U', target_location);
+
+      /* Binary search */
+      printf("\n\nBinary Search:");
+      show_data(bin_data, LAST_INDEX, search_target);
+      if(binary_search(bin_data, LAST_INDEX, search_target, &target_location))
+         search_result('S', target_location);
+      else
+         search_result('U', target_location);
    }
 
+   /* Say goodbye and terminate the program */
+   printf("\n\nThanks for searching. Have a nice day! ;-)");
    return 0;
 }
 
@@ -247,6 +259,28 @@ int probability_search(int array[], int last_index, int search_target, int *p_ta
 /**********************************************************************/
 /*                                     */
 /**********************************************************************/
-   /* No found variable, return (expression evaluating true or false) */
-   /* Print statements that add index every time index value is looked at (search path) */
-      /* Should be able to remove without breaking code */
+int binary_search(int array[], int last_index, int search_target, int *p_target_location)
+{
+   int beginning_index = 0,    /* */
+       middle_index = 0,       /* */
+       end_index = last_index; /* */
+
+   printf("\n   Search Path: ");
+
+   while(beginning_index <= end_index)
+   {
+      middle_index = (beginning_index + end_index) / 2;
+      printf("[%2d]", middle_index);
+
+      if(search_target > array[middle_index])
+         beginning_index = (middle_index + 1);
+      else
+         if(search_target < array[middle_index])
+            end_index = middle_index - 1;
+         else
+            beginning_index = (end_index + 1);
+   }
+   *p_target_location = middle_index;
+
+   return (search_target == array[*p_target_location]);
+}
