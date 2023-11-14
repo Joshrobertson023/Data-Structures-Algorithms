@@ -37,4 +37,4 @@ The three algorithms were:
    Probability Search
    Binary Search
 Once again there was a lot of printing to the terminal to demonstrate
-the search paths and techniques of the algorithms.s
+the search paths and techniques of the algorithms.

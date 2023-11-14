@@ -219,5 +219,5 @@ int sum_evens(int range_start, int range_end)
 /**********************************************************************/
 int is_even(int number) 
 {
-   return (number % 2 == 0) ? 1 : 0;
+   return number % 2 == 0;
 }
