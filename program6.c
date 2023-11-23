@@ -57,7 +57,8 @@ void print_instructions();
 /**********************************************************************/
 int main()
 {
-   int *p_empty_student_id_list; /* */
+   int *p_student_list, /* */
+       student_id;      /* */
 
    /* Print the program heading */
    print_heading();
@@ -66,10 +67,16 @@ int main()
    while(print_instructions(), (get_response() == 'y'))
    {
       /* Create empty student id list */
-      p_empty_student_id_list = create_list();
+      p_student_list = create_list();
 
       /* */
-      while(printf("Enter the next student id"))
+      while(printf("\nEnter the next student id (0 = quit): "), (scanf("%d", &student_id) > LIST_HEADER))
+      {
+         if(student_id > MAXIMUM_ID)
+            printf("    Id rejected - it cannot exceed 999999");
+         else
+            insert_student(p_student_list, student_id);
+      }
    }
 }
 
@@ -92,15 +99,10 @@ void print_heading()
 /**********************************************************************/
 void print_instructions()
 {
-   printf("\nThis program demonstrates various search algorithms.");
-   printf("\nYou enter in any whole number, and the program will");
-   printf("\nsearch for it in an ORDERED array of whole numbers");
-   printf("\nusing each of the following search algorithms:");
-   printf("\n     1. Ordered Sequential Search");
-   printf("\n     2. Probability Search");
-   printf("\n     3. Binary Search");
-   printf("\nThe progress of each search is shown so the efficiency");
-   printf("\nof the search algorithms can be compared.");
+   printf("\n\n\n");
+   printf("\n    This program maintains a list of students by their");
+   printf("\n    id number. After entry of all id's, it sorts them");
+   printf("\n    into ascending order, then removes all duplicates.");
    return;
 }
 
@@ -111,9 +113,11 @@ char get_response()
 {
    char response[2]; /* Response to continue or quit */
 
+   printf("\n\n");
+
    do
    {
-      printf("\n\nDo you want to process another range? ");
+      printf("Do you want to enter another student id list? (y or n): ");
       printf("(Y = yes, N = no): ");
       scanf ("%1s", response[0]);
       response[0] = tolower(response[0]);
@@ -124,7 +128,7 @@ char get_response()
 }
 
 /**********************************************************************/
-/* Create empty student ID list (linked list?) with header and trailer
+/* Create empty student id list (linked list?) with header and trailer
 /**********************************************************************/
 STUDENT *create_list() /* TODO: Name them students or nodes since just header and trailer? */
 {
@@ -153,4 +157,28 @@ STUDENT *create_list() /* TODO: Name them students or nodes since just header an
 
    /* Return the pointer to the newly created linked list */
    return p_new_student;
+}
+
+/**********************************************************************/
+/* Create empty student id list (linked list?) with header and trailer
+/**********************************************************************/
+void insert_student(STUDENT *p_student_list, int student_id) /* TODO: change to p_next_student? My notes say so... */
+{
+   STUDENT *p_new_student,                                       /* Points to newly created student */
+           *p_current_student  = p_student_list->p_next_student, /* Points to each data node ???????? */
+           *p_previous_student = p_student_list;                 /* Points to previous data node */
+
+   if((p_new_student = (STUDENT *) malloc(sizeof(STUDENT))) == NULL)
+   {
+      printf("\nError #%d occurred in insert_student().", ID_ALLOC_ERR);
+      printf("\nCannot allocate memory for the student node."); /* Re-write? */
+      printf("\nThe program is aborting.");
+      exit  (ID_ALLOC_ERR);
+   }
+
+   p_new_student->student_id          = student_id;
+   p_new_student->p_next_student      = p_current_student;
+   p_previous_student->p_next_student = p_new_student;
+
+   return;
 }
