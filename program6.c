@@ -57,6 +57,8 @@ void print_instructions();
 /**********************************************************************/
 int main()
 {
+   int *p_empty_student_id_list; /* */
+
    /* Print the program heading */
    print_heading();
 
@@ -64,7 +66,10 @@ int main()
    while(print_instructions(), (get_response() == 'y'))
    {
       /* Create empty student id list */
+      p_empty_student_id_list = create_list();
 
+      /* */
+      while(printf("Enter the next student id"))
    }
 }
 
@@ -119,13 +124,13 @@ char get_response()
 }
 
 /**********************************************************************/
-/* Create empty student ID list with header and trailer
+/* Create empty student ID list (linked list?) with header and trailer
 /**********************************************************************/
-STUDENT *create_list()
+STUDENT *create_list() /* TODO: Name them students or nodes since just header and trailer? */
 {
    STUDENT *p_new_student; /* Points to the newly created list */
 
-   /* Get a new student and make it the list header */
+   /* Get a new node and make it the list header */
    if((p_new_student = (STUDENT *)malloc(sizeof(STUDENT))) == NULL)
    {
       printf("\nError #%d occurred in create_list().", HEADER_ALLOC_ERR);
@@ -135,5 +140,17 @@ STUDENT *create_list()
    }
    p_new_student->student_id = LIST_HEADER;
 
-   
+   /* Get a new node and attach to end of list as the trailer */
+   if((p_new_student->p_next_student = (STUDENT *) malloc(sizeof(STUDENT))) == NULL)
+   {
+      printf("\nError #%d occurred in create_list().", TRAILER_ALLOC_ERR);
+      printf("\nCannot allocate memory for the list trailer.");
+      printf("\nThe program is aborting.");
+      exit  (TRAILER_ALLOC_ERR);
+   }
+   p_new_student->p_next_student->student_id = LIST_TRAILER;
+   p_new_student->p_next_student->p_next_student = NULL;
+
+   /* Return the pointer to the newly created linked list */
+   return p_new_student;
 }
