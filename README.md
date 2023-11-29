@@ -30,6 +30,8 @@ the numbers it is adding or skipping to demonstrate the recursive
 solution.
 
 **Program 7**
+Online IDE: https://programiz.pro/ide/c/P7OP652N47
+
 We are doing this program out of order. In this program I created
 three different searching algorithms to search arrays of integers.
 The three algorithms were:

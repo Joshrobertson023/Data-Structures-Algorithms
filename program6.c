@@ -1,6 +1,6 @@
 /**********************************************************************/
 /*                                                                    */
-/* Program Name: program6 - 
+/* Program Name: program6 - */
 /* Author:       Josh Robertson                                       */
 /* Installation: Pensacola Christian College, Pensacola, Florida      */
 /* Course:       CS227, Data Structures and Algorithms                */
@@ -10,7 +10,7 @@
 
 /**********************************************************************/
 /*                                                                    */
-/* 
+/* */
 /*                                                                    */
 /**********************************************************************/
 
@@ -48,17 +48,24 @@ typedef struct student STUDENT;
 /*                        Function Prototypes                         */
 /**********************************************************************/
 void print_heading();
-   /* Print the program heading                                       */
+
 void print_instructions();
-   /* Print the program instructions                                  */
+
+char get_response();
+
+STUDENT *create_list();
+
+void insert_student(STUDENT *p_student_list, int student_id);
+
+void print_list(STUDENT *p_student);
 
 /**********************************************************************/
 /*                           Main Function                            */
 /**********************************************************************/
 int main()
 {
-   int *p_student_list, /* */
-       student_id;      /* */
+   int     student_id;      /* */
+   STUDENT *p_student_list; /* */
 
    /* Print the program heading */
    print_heading();
@@ -70,13 +77,18 @@ int main()
       p_student_list = create_list();
 
       /* */
-      while(printf("\nEnter the next student id (0 = quit): "), (scanf("%d", &student_id) > LIST_HEADER))
+      while(printf("\nEnter the next student id (0 = quit): "), 
+            scanf("%d", &student_id),
+            student_id != QUIT)
       {
          if(student_id > MAXIMUM_ID)
             printf("    Id rejected - it cannot exceed 999999");
          else
             insert_student(p_student_list, student_id);
       }
+
+      /* Print unsorted list id */
+      print_list(p_student_list);
    }
 }
 
@@ -117,9 +129,9 @@ char get_response()
 
    do
    {
-      printf("Do you want to enter another student id list? (y or n): ");
+      printf("\nDo you want to enter another student id list? ");
       printf("(Y = yes, N = no): ");
-      scanf ("%1s", response[0]);
+      scanf ("%1c", &response[0]);
       response[0] = tolower(response[0]);
    }
    while(response[0] != 'y' && response[0] != 'n');
@@ -128,7 +140,7 @@ char get_response()
 }
 
 /**********************************************************************/
-/* Create empty student id list (linked list?) with header and trailer
+/* Create empty student id list (linked list?) with header and trailer */
 /**********************************************************************/
 STUDENT *create_list() /* TODO: Name them students or nodes since just header and trailer? */
 {
@@ -160,7 +172,7 @@ STUDENT *create_list() /* TODO: Name them students or nodes since just header an
 }
 
 /**********************************************************************/
-/* Create empty student id list (linked list?) with header and trailer
+/* Insert student in list */
 /**********************************************************************/
 void insert_student(STUDENT *p_student_list, int student_id) /* TODO: change to p_next_student? My notes say so... */
 {
@@ -179,6 +191,23 @@ void insert_student(STUDENT *p_student_list, int student_id) /* TODO: change to 
    p_new_student->student_id          = student_id;
    p_new_student->p_next_student      = p_current_student;
    p_previous_student->p_next_student = p_new_student;
+
+   return;
+}
+
+/**********************************************************************/
+/* Print the student ids from list */
+/**********************************************************************/
+void print_list(STUDENT *p_student)
+{
+   printf("The unsorted student id list, as entered, is: ");
+
+   while(p_student->p_next_student != NULL)
+   {
+      if(p_student->student_id != QUIT)
+         printf("\n                      %6d", p_student->student_id);
+      p_student = p_student->p_next_student;
+   }
 
    return;
 }
