@@ -63,7 +63,7 @@ int get_number_ids(STUDENT *p_student);
 
 void sort_list(STUDENT *p_student_list, int quantity);
 
-void remove_duplicates(STUDENT *p_student_list);
+void remove_duplicate_ids(STUDENT *p_student_list);
 
 /**********************************************************************/
 /*                           Main Function                            */
@@ -105,6 +105,14 @@ int main()
       print_list(p_student_list);
       printf("\nThe length of the sorted student id list is: %d",
          get_number_ids(p_student_list));
+
+      /* Delete duplicate student ids */
+      remove_duplicate_ids(p_student_list);
+      printf("\nThe student id list, with duplicate id's removed, ");
+      printf(  "sorted ascending by id, is:");
+      print_list(p_student_list);
+      printf("\nThe length of the cleaned and sorted student id list ");
+      printf(  "is: %d", get_number_ids(p_student_list));
    }
 }
 
@@ -192,9 +200,7 @@ STUDENT *create_list() /* TODO: Name them students or nodes since just header an
 /**********************************************************************/
 void insert_student(STUDENT *p_student_list, int student_id) /* TODO: change to p_next_student? My notes say so... */
 {
-   STUDENT *p_new_student,                                       /* Points to newly created student */
-           *p_current_student  = p_student_list->p_next_student, /* Points to each data node ???????? */
-           *p_previous_student = p_student_list;                 /* Points to previous data node */
+   STUDENT *p_new_student; /* Points to newly created student */
 
    if((p_new_student = (STUDENT *) malloc(sizeof(STUDENT))) == NULL)
    {
@@ -204,9 +210,9 @@ void insert_student(STUDENT *p_student_list, int student_id) /* TODO: change to 
       exit  (ID_ALLOC_ERR);
    }
 
-   p_new_student->student_id          = student_id;
-   p_new_student->p_next_student      = p_current_student;
-   p_previous_student->p_next_student = p_new_student;
+   p_new_student->student_id = student_id;
+   p_new_student->p_next_student = p_student_list->p_next_student;
+   p_student_list->p_next_student = p_new_student;
 
    return;
 }
@@ -271,11 +277,31 @@ void sort_list(STUDENT *p_student_list, int quantity) /* Change name */
 }
 
 /**********************************************************************/
-/* Remove duplicates from the list */
+/* Remove duplicate student ids from the list */
 /**********************************************************************/
-void remove_duplicates(STUDENT *p_student_list)
+void remove_duplicate_ids(STUDENT *p_student_list)
 {
+   STUDENT *p_current_student = p_student_list->p_next_student->p_next_student,
+                                       /* Points to each student node */
+           *p_previous_student = p_student_list->p_next_student;
+                                   /* Points to previous student node */
 
+   while(p_current_student->student_id != LIST_TRAILER)
+   {
+      if(p_previous_student->student_id == p_current_student->student_id)
+      {
+         printf("\nDeleting the duplicate student id: %d",
+            p_current_student->student_id);
+         p_previous_student->p_next_student = p_current_student->p_next_student;
+         free(p_current_student);
+         p_current_student = p_previous_student->p_next_student;
+      }
+      else 
+      {
+         p_previous_student = p_current_student;
+         p_current_student = p_current_student->p_next_student;
+      }
+   }
 
    return;
 }
